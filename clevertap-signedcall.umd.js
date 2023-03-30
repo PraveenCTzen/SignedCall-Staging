@@ -28533,14 +28533,14 @@ class SIP {
       // toggle state value to fire subscriber's callback
       _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit("setOngoingCallEvents", !_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.setOngoingCallEvents)
       // TODO - check the usability of this code
-   
-        if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.callsockReconnectAttempt < 1) {
-        let callTimer = new _libs_timer__WEBPACK_IMPORTED_MODULE_5__["default"]('sc__sdk--timer');
+      /**
+       * if (!store.state.callsockReconnectAttempt > 0) {
+       * let callTimer = new Timer('sc__sdk--timer');
           callTimer.startTimer()
        }
-     
-      // let callTimer = new Timer('sc__sdk--timer');
-      // callTimer.startTimer()
+       */
+      let callTimer = new _libs_timer__WEBPACK_IMPORTED_MODULE_5__["default"]('sc__sdk--timer');
+      callTimer.startTimer()
       // 
       audioSink.play();
       (0,_utils_callmodal_ongoing_screen__WEBPACK_IMPORTED_MODULE_4__.showOngoingCallElements)()
