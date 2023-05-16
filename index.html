@@ -108,7 +108,7 @@
 <!-- End PushAlert -->
 
 <script>
-  Notification.requestPermission().then((prem)=>{
+  Promise.resolve(Notification.requestPermission()).then(function(prem){
       console.log('hello world',prem);
       if(prem === "granted"){
         console.log('permissin granted');
