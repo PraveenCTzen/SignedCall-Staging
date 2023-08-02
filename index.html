@@ -352,7 +352,7 @@
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error in call',error);
         if (error.name === "JsonWebTokenError") {
           alert(
             "ECTA is enabled for your account. Please retry with the Call Token option enabled"
