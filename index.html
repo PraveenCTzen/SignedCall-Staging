@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="icon" href="#" />
-  <link rel="manifest" href="manifest.json">
   <title>Signed Call web SDK</title>
   <style>
     html,
@@ -112,15 +111,7 @@
       <input type="text" id="accountId" placeholder="Account ID" /><br />
       API KEY: <input type="text" id="apikey" placeholder="API KEY" /><br />
       Name: <input type="text" id="name" placeholder="Name" /><br />
-      Region : <br>
-      <input type="radio" id="in1" name="region" value="in1" checked="checked">
-      <label for="in1">in1</label><br>
-      <input type="radio" id="sg1" name="region" value="sg1">
-      <label for="sg1">sg1</label><br> 
-      <input type="radio" id="sk1" name="region" value="sk1">
-      <label for="sk1">sk1</label><br>  
-      <input type="radio" id="eu1" name="region" value="eu1">
-      <label for="eu1">eu1</label><br><br>
+      <br />
       <button id="connectBtn" type="button">Connect</button>
       <button id="disconnectBtn" type="button" onclick="disconnect()" class="hide">
         Disconnect
@@ -144,59 +135,27 @@
   </div>
 </body>
 <!-- <script type="text/javascript" src="./node_modules/crypto-js/crypto-js.js"></script> -->
-<!-- <script type="text/javascript">
-  
-</script> -->
+<script type="text/javascript">
+  var clevertap = { event: [], profile: [], account: [], onUserLogin: [], notifications: [], privacy: [] };
+  clevertap.account.push({ id: '675-8WW-4R6Z' }, 'sg1');
+  clevertap.privacy.push({ optOut: false });
+  clevertap.privacy.push({ useIP: false });
+  (function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = "./clevertap.js"
+    // wzrk.src = "https://cdn.jsdelivr.net/gh/CleverTap/clevertap-web-sdk/clevertap.js"
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+  })();
+</script>
 <script src="./clevertap-signedcall.umd.js"></script>
 <script type="text/javascript">
-  var clevertap
   document
     .getElementById("connectBtn")
     .addEventListener("click", function () {
-      var radioBtn = document.getElementsByName("region")
-      console.log('radio',radioBtn)
-      var regionValue
-      var accId
-      if(radioBtn){
-        for(i = 0; i < radioBtn.length; i++) {
-                if(radioBtn[i].checked){
-                  console.log('true',radioBtn[i].value)
-                  regionValue = radioBtn[i].value
-                }
-            }
-      }
-      switch(regionValue) {
-      case "sg1":
-        accId = "5WW-WWW-WW4Z";
-        break;
-      case "in1":
-        accId = "ZWW-WWW-WW4Z";
-        break;
-      case "eu1":
-        accId = "566-7Z4-W54Z";
-        break;
-      case "sk1":
-        accId = "679-8Z7-W66Z";
-        break;
-      }
-      clevertap = { event: [], profile: [], account: [], onUserLogin: [], notifications: [], privacy: [] };
-      clevertap.account.push({ id: accId }, regionValue);
-      clevertap.privacy.push({ optOut: false });
-      clevertap.privacy.push({ useIP: false });
-      (function () {
-        console.log('init ct sdk');
-        var wzrk = document.createElement('script');
-        wzrk.type = 'text/javascript';
-        wzrk.async = true;
-        // wzrk.src = "./clevertap.js"
-        wzrk.src = "https://cdn.jsdelivr.net/gh/CleverTap/clevertap-web-sdk/clevertap.js"
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wzrk, s);
-      })();
-      setTimeout(()=>{
-        initSDK();
-      },1000)
-      
+      initSDK();
     });
   let SignedCallClient = undefined;
   let platform = "web";
@@ -216,7 +175,6 @@
 
   document.getElementById("cuid").value = "ayush09"
   function initSDK() {
-    console.log('init sdk');
     let cc = document.getElementById("cc").value || "";
     let phone = document.getElementById("phone").value || "";
     let cuid = document.getElementById("cuid").value || "";
@@ -352,7 +310,7 @@
         }
       })
       .catch((error) => {
-        console.log('error in call',error);
+        console.log(error);
         if (error.name === "JsonWebTokenError") {
           alert(
             "ECTA is enabled for your account. Please retry with the Call Token option enabled"
